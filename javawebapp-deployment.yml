@@ -13,7 +13,7 @@ spec:
         name: javawebapp
     spec:
       containers:
-      - image: naveennk1999/java-web-app
+      - image: naveennk1999/spring-boot-mongo
         name: javawebapp
         ports:
         - name: javawebapp
