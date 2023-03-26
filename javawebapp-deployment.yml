@@ -1,37 +1,41 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: javaapp
   labels:
-    name: javawebapp
-  name: java-controller
+    app: javaapp
 spec:
   replicas: 1
   selector:
-      matchLabels:
-        name: javawebapp
+    matchLabels:
+      app: javaapp
   template:
     metadata:
-       labels: javawebapp
+      labels:
+        app: javaapp
     spec:
       containers:
-      - image: naveennk1999/spring-boot-mongo
-        name: javawebapp
+      - name: javaapp
+        image: naveennk1999/spring-boot-mongo
         ports:
-        - name: javawebapp
-          containerPort: 8080  
+        - containerPort: 8080
+        resources:
+          requests:
+             cpu: 500m
+          limits:
+             cpu: 1
+
 ---
-# Node Port Service
+
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    name: javawebapp
-  name: javawebapp
+  name: java
 spec:
   type: NodePort
-  ports:
-    - port: 8080
-      targetPort: 8080
   selector:
-    name: javawebapp
+    app: javaapp
+  ports:
+  - name: javaapp
+    port: 80
+    targetPort: 8080
