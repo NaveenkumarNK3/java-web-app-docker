@@ -1,19 +1,21 @@
 ---
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     name: javawebapp
   name: java-controller
 spec:
   replicas: 1
+  selector:
+      matchLabels:
+        name: javawebapp
   template:
     metadata:
-      labels:
-        name: javawebapp
+       labels: javawebapp
     spec:
       containers:
-      - image: naveennk1999/spring-boot-mongo:1
+      - image: naveennk1999/spring-boot-mongo
         name: javawebapp
         ports:
         - name: javawebapp
